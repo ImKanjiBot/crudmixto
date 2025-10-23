@@ -1,5 +1,6 @@
 package com.miaplicacion.CRUDMIXTO.controller;
 
+import com.miaplicacion.CRUDMIXTO.entity.Empleado;
 import com.miaplicacion.CRUDMIXTO.entity.Proyecto;
 import com.miaplicacion.CRUDMIXTO.service.ProyectoService;
 import jakarta.validation.Valid;
@@ -64,11 +65,15 @@ public String cambiarEstado(@PathVariable String id) {
     // ✅ Guardar proyecto
     @PostMapping("/guardar")
     public String guardar(@Valid @ModelAttribute("proyecto") Proyecto proyecto,
-                          BindingResult br) {
+                          BindingResult br, Model model) {
         if (br.hasErrors()) {
             return "proyectos/nuevo";
         }
-        service.guardar(proyecto);
+        try {
+            service.guardar(proyecto);
+        } catch (Exception e) {
+            return "proyectos/nuevo";
+        }
         return "redirect:/proyectos";
     }
 

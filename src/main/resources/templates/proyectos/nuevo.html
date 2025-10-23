@@ -9,22 +9,25 @@
     <h2>Registrar Proyecto</h2>
 
     <form th:action="@{/proyectos/guardar}" th:object="${proyecto}" method="post">
-        <!-- CSRF -->
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <!-- CSRF -->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-        <div class="mb-3">
-            <label class="form-label">Nombre</label>
-            <input type="text" th:field="*{nombre}" class="form-control" required/>
-        </div>
+    <!-- Agregar campo oculto para el id -->
+    <input type="hidden" th:field="*{id}" />
 
-        <div class="mb-3">
-            <label class="form-label">Descripción</label>
-            <textarea th:field="*{descripcion}" class="form-control" rows="3"></textarea>
-        </div>
+    <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" th:field="*{nombre}" class="form-control" required/>
+    </div>
 
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a th:href="@{/proyectos}" class="btn btn-secondary">Cancelar</a>
-    </form>
+    <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        <textarea th:field="*{descripcion}" class="form-control" rows="3"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a th:href="@{/proyectos}" class="btn btn-secondary">Cancelar</a>
+</form>
 </section>
 </body>
 </html>

@@ -30,12 +30,14 @@ public class ProyectoService {
         return repository.findAll();
     }
 
-    public Optional<Proyecto> buscarPorId(String id) {
-        return repository.findById(id);
+    public Proyecto guardar(Proyecto proyecto) {
+        System.out.println("Guardando proyecto con ID: " + proyecto.getId());
+        return repository.save(proyecto);
     }
 
-    public Proyecto guardar(Proyecto proyecto) {
-        return repository.save(proyecto);
+
+    public Optional<Proyecto> buscarPorId(String id) {
+        return repository.findById(id);
     }
 
     public void eliminar(String id) {

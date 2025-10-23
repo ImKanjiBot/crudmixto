@@ -6,47 +6,54 @@
 </head>
 <body>
 <section>
-    <h2>Lista de Asignaciones</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Empleado</th>
-                <th>Proyecto</th>
-                <th>Tareas</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="asig : ${asignaciones}">
-                <td th:text="${asig.id}"></td>
-                <td th:text="${empleadoMap[asig.empleadoId]}"></td>
-                <td th:text="${proyectoMap[asig.proyectoId]}"></td>
-                <td>
-                    <!-- Listar tareas de la asignación -->
-                    <ul>
-                        <li th:each="t : ${asig.tareas}">
-                            <span th:text="${t.nombre}"></span> - 
-                            <span th:text="${t.estado}"></span>
-                            <a th:href="@{'/tareas/completar/' + ${t.id}}" 
-                               class="btn btn-sm btn-success">Completar</a>
-                            <form th:action="@{'/tareas/eliminar/' + ${t.id}}" 
-                                  method="post" style="display:inline;">
-                                <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                            </form>
-                        </li>
-                        <a th:href="@{'/tareas/nueva/' + ${asig.id}}" 
-                                class="btn btn-sm btn-primary">+ Nueva Tarea</a>
-                    </ul>
-                </td>
-                <td>
-                    <form th:action="@{'/asignaciones/eliminar/' + ${asig.id}}" method="post">
-                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div>
+        <h2>Lista de Asignaciones</h2>
+        <a th:href="@{/asignaciones/nueva}" class="btn btn-primary mb-0">+ Nueva Asignación</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Empleado</th>
+                    <th>Proyecto</th>
+                    <th>Tareas</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="asig : ${asignaciones}">
+                    <td th:text="${asig.id}"></td>
+                    <td th:text="${empleadoMap[asig.empleadoId]}"></td>
+                    <td th:text="${proyectoMap[asig.proyectoId]}"></td>
+                    <td>
+                        <!-- Listar tareas de la asignación -->
+                        <ul>
+                            <li th:each="t : ${asig.tareas}">
+                                <span th:text="${t.descripcion}"></span> - 
+                                <span th:text="${t.estado}"></span>
+                                <form th:action="@{'/tareas/completar/' + ${t.id}}" method="post" style="display:inline;">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                    <button type="submit" class="btn btn-sm btn-success">Completar</button>
+                                </form>
+                                <form th:action="@{'/tareas/eliminar/' + ${t.id}}" method="post" style="display:inline;">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                </form>
+                            </li>
+                            <a th:href="@{'/tareas/nueva/' + ${asig.id}}" 
+                                    class="btn btn-sm btn-primary">+ Nueva Tarea</a>
+                        </ul>
+                    </td>
+                    <td>
+                        <form th:action="@{'/asignaciones/eliminar/' + ${asig.id}}" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
 </body>
 </html>
