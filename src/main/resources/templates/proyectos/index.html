@@ -39,8 +39,8 @@
                             </form>
 
                             <!-- Editar -->
-                            <a class="btn btn-primary btn-sm" th:href="@{'/proyectos/editar/' + ${p.id}}">Editar</a>
                             
+                            <a class="btn btn-primary btn-sm" th:href="@{'/proyectos/editar/' + ${p.id}}">Editar</a>
                             <!-- Eliminar -->
                             <form th:action="@{/proyectos/eliminar/{id}(id=${p.id})}" method="post"
                                   onsubmit="return confirm('¿Seguro que deseas eliminar este proyecto?');">
