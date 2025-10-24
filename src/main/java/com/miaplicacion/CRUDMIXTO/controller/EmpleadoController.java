@@ -43,7 +43,21 @@ public class EmpleadoController {
     }
 
     // ✅ Guardar
-    
+    @PostMapping("/guardar")
+    public String guardar(@Valid @ModelAttribute("empleado") Empleado empleado,
+                          BindingResult br, Model model) {
+        if (br.hasErrors()) {
+            return "empleados/nuevo";
+        }
+        try {
+            service.guardar(empleado);
+        } catch (IllegalArgumentException ex) {
+            br.rejectValue("email", "error.empleado", ex.getMessage());
+            return "empleados/nuevo";
+        }
+        return "redirect:/empleados";
+    }
+
 
     // ✅ Ver empleado
     @GetMapping("/ver/{id}")

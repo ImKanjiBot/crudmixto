@@ -1,6 +1,4 @@
 package com.miaplicacion.CRUDMIXTO.controller;
-
-import com.miaplicacion.CRUDMIXTO.entity.Empleado;
 import com.miaplicacion.CRUDMIXTO.entity.Proyecto;
 import com.miaplicacion.CRUDMIXTO.service.ProyectoService;
 import jakarta.validation.Valid;
@@ -38,19 +36,19 @@ public class ProyectoController {
     }
 
     // ✅ Cambiar estado de un proyecto
-@PostMapping("/cambiarEstado/{id}")
-public String cambiarEstado(@PathVariable String id) {
-    var proyectoOpt = service.buscarPorId(id);
-    if (proyectoOpt.isPresent()) {
-        var proyecto = proyectoOpt.get();
-        // Si está "Pendiente", lo pasamos a "Completado". Si no, a "Pendiente".
-        if ("Pendiente".equalsIgnoreCase(proyecto.getEstado())) {
-            proyecto.setEstado("Completado");
-        } else {
-            proyecto.setEstado("Pendiente");
+    @PostMapping("/cambiarEstado/{id}")
+    public String cambiarEstado(@PathVariable String id) {
+        var proyectoOpt = service.buscarPorId(id);
+        if (proyectoOpt.isPresent()) {
+            var proyecto = proyectoOpt.get();
+            // Si está "Pendiente", lo pasamos a "Completado". Si no, a "Pendiente".
+            if ("Pendiente".equalsIgnoreCase(proyecto.getEstado())) {
+                proyecto.setEstado("Completado");
+            } else {
+                proyecto.setEstado("Pendiente");
+            }
+            service.guardar(proyecto);
         }
-        service.guardar(proyecto);
-    }
     return "redirect:/proyectos"; // 👈 vuelve al listado
 }
 
@@ -68,10 +66,9 @@ public String cambiarEstado(@PathVariable String id) {
                           BindingResult br, Model model) {
         if (br.hasErrors()) {
             return "proyectos/nuevo";
-        }
-        try {
+        } try {
             service.guardar(proyecto);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException ex) {
             return "proyectos/nuevo";
         }
         return "redirect:/proyectos";

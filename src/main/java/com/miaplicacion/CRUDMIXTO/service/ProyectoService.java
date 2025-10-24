@@ -31,10 +31,8 @@ public class ProyectoService {
     }
 
     public Proyecto guardar(Proyecto proyecto) {
-        System.out.println("Guardando proyecto con ID: " + proyecto.getId());
         return repository.save(proyecto);
     }
-
 
     public Optional<Proyecto> buscarPorId(String id) {
         return repository.findById(id);
